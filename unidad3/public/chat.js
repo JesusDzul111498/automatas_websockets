@@ -56,7 +56,12 @@ function vocales(datas){
     // Cantidad de vocales recibidas.
     var vocaless = /[aeiou]/gim;
     var plantilla = datas.toString();
-    var info = plantilla.match(vocaless);
+    var info = 0;
+    if(plantilla.match(vocaless)!=null){
+        info = plantilla.match(vocaless);
+    }else{
+        return 0;
+    }
    return info.length;
  }
 
@@ -64,8 +69,18 @@ function vocales(datas){
 function palabra(datas){
     // Cantidad de palabra recibidas.
     var palabraa = datas.split(" ");
-    var conta = palabraa.length;
-   return conta;
+    var contador = 0;
+    var ca = 0;
+    for(var i = 0; i<palabraa.length; i++){
+         if(palabraa[i].length>1){
+            if(!palabraa[i].match(/[0-9]/gm)){
+                contador++;
+            }
+         }  
+           
+    }
+
+   return contador;
 
          
  }
