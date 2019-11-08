@@ -36,7 +36,7 @@ socket.on('chat:message', function(data){
         console.log(a + "Palabras que finalizan con letras que no son vocal.");
     output.innerHTML +=  
     `<p><strong>${data.username}</strong>:${data.message}</p>
-     <p><strong>"Numero de vocoles recibidas</strong>:: ${b}</p>
+     <p><strong>"Numero de vocales recibidas</strong>:: ${b}</p>
      <p><strong>"Cantidad de palabra recibidas</strong>:: ${c}</p>
      <p><strong>"Cantidad de numeros contenidos en el mensaje enviado</strong>:: ${d}</p>
      <p><strong>"Cantidad de palabras que inician con mayuscula</strong>:: ${m}</p>
@@ -54,7 +54,7 @@ socket.on('chat:typing', function(data){
 //Expresion regulares
 function vocales(datas){
     // Cantidad de vocales recibidas.
-    var vocaless = /[aeiou]/gim;
+    var vocaless = /[aeiouáéíóú]/gim;
     var plantilla = datas.toString();
     var info = 0;
     if(plantilla.match(vocaless)!=null){
@@ -72,14 +72,9 @@ function palabra(datas){
     var contador = 0;
     var ca = 0;
     for(var i = 0; i<palabraa.length; i++){
-         if(palabraa[i].length>1){
-            if(!palabraa[i].match(/[0-9]/gm)){
-                contador++;
-            }
-         }  
-           
+          contador++;  
     }
-
+// Palabras no se si contar numeros como palabras
    return contador;
 
          
@@ -87,22 +82,23 @@ function palabra(datas){
  //Expresion regulares
 function numeros(datas){
     // Cantidad de numeros contenidos en el mensaje enviado.
-     var numeross = /[1234567890]{1,}/g;
-     var nuemero = 0;
+     var numeross = /[0-9]/g;
+     var nums =0;
      var palabra = datas.split(" ");
      for(var i = 0; i<palabra.length; i++){
          if(palabra[i].match(numeross)!=null){
-             nuemero++;
+            var j =palabra[i].match(numeross);
+            nums = j.length;
          }
      }
      
-     return nuemero;
+     return nums;
  }
 
  //Expresion regulares
 function mayusculas(datas){
     // Cantidad de palabras que inician con mayuscula.
-    var mayusculass = /^[A-Z]/gm;
+    var mayusculass = /^[A-Z-ÁÉÍÓÚ]/gm;
     var cadenas = datas.split(" ");
     var info = 0;
     for(var i = 0; i<cadenas.length; i++){
@@ -117,15 +113,17 @@ function mayusculas(datas){
  //Expresion regulares
 function fnvocal(datas){
     // Palabras que finalizan con letras que no son vocal.
-     var fnvocall = /[^aeiou]$/gm;
+     var fnvocall = /[^aeiou]$/igm;
      var conta = 0;
      var cadenas = datas.split(" ");
      for (let i = 0; i < cadenas.length; i++) {
-        if(cadenas[i].length>2){
-            if(cadenas[i].match(fnvocall)!=null ){
-                conta  = cadenas.length - 1;
+        
+            if(cadenas[i].match(fnvocall)!=null && cadenas[i].match(/[^0-9]$/gm) ){
+                
+                    conta  ++;
+                
             }
-        }
+        
          
      }
      return conta;
