@@ -74,7 +74,7 @@ function palabra(datas){
     for(var i = 0; i<palabraa.length; i++){
           contador++;  
     }
-// Palabras no se si contar numeros como palabras
+    // Palabras no se si contar numeros como palabras
    return contador;
 
          
